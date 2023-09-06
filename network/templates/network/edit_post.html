@@ -1,0 +1,32 @@
+{% extends "network/layout.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block extra_css %}
+    {{ form.media.css }}
+    <link href="{% static 'network/css/forms.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<div class="edit-profile">
+    
+    
+    <div class="edit-profile-form create-listing-form info-card">
+        <form action="{% url 'network:edit_post' post.id %}" method="post">
+            {% csrf_token %}
+            <div class="post-form-wrapper">
+                <div class="form-group">
+                    {{ form.content}}
+                </div>
+                <button class="btn btn-secondary" name="cancel" value="clicked">{% trans "Cancel" %}</button></a>
+                <input class="btn btn-primary" type="submit" value='{% trans "Edit" %}'> 
+            </div>
+        </form>  
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+        

@@ -1,0 +1,30 @@
+{% extends "network/layout.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block body %}
+    {% if user.is_authenticated and add_post_available %}
+        <div class="post-form-wrapper">
+            <form action="{% url 'network:post-comment' action='post' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ post_form.content}}
+                </div>
+                <br />
+                <input class="btn btn-primary" type="submit" value='{% trans "Post" %}'>
+            </form>
+        </div>
+    {% endif %}
+
+    {% for post in page_obj.object_list %}
+        {% include "network/posts.html"%}
+    {% empty %}
+        <div class="no-posts">
+            {% trans "No posts yet" %}
+        </div>
+    {% endfor %}
+        {% include "network/paginator.html"%}
+{% endblock %}
+
+
+

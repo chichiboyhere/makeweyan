@@ -1,0 +1,121 @@
+<!-- From the posts.html template -->
+<!-- edit post button -->
+<button class="dropdown-item dropdown-edit" data-toggle="modal" data-target="#modal_edit_post_{{ post.id }}">{% trans "Edit" %}</button>
+
+<!-- edit post modal -->
+<div class="modal fade edit-modal" id="modal_edit_post_{{ post.id }}" tabindex="-1" role="dialog" aria-labelledby="modal_edit_post_{{ post.id }}_label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="modal_edit_post_{{ post.id }}_label">{% trans "What did you really want to say?" %}</h5>
+           
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary modal-close" data-dismiss="modal">{% trans "Close" %}</button>
+                <button type="button" class="btn btn-primary modal-save">{% trans "Save" %}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- From the edit_post page -->
+<!-- based on https://stackoverflow.com/a/14647770 -->
+{% if form.errors %}
+{% for field in form %}
+    {% for error in field.errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endfor %}
+{% for error in form.non_field_errors %}
+    <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+    </div>
+{% endfor %}
+{% endif %}
+<div class="alert alert-danger hidden" id="file-size-error">
+<strong>{% blocktranslate %}Image file exceeds {{ max_file_size }} MB size limit{% endblocktranslate %}</strong>
+</div>
+<div class="alert alert-danger hidden" id="file-type-error">
+<strong>{% trans "File must be type image" %}</strong>
+</div>
+
+<!-- comment -->
+<button class="dropdown-item dropdown-edit" data-toggle="modal" data-target="#modal_edit_comment_{{ comment.id }}">{% trans "Edit" %}</button>
+<div class="edit-modal modal fade" id="modal_edit_comment_{{ comment.id }}" tabindex="-1" role="dialog" aria-labelledby="modal_edit_comment_{{ comment.id }}_label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="modal_edit_comment_{{ comment.id }}_label">{% trans "What did you really want to say?" %}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary modal-close" data-dismiss="modal">{% trans "Close" %}</button>
+                <button type="button" class="btn btn-primary modal-save">{% trans "Save" %}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modals -->
+<div class="modal fade delete-modal" id="modal_delete_post_{{ post.id }}" tabindex="-1" role="dialog" aria-labelledby="modal_delete_post_{{ post.id }}_label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="modal_delete_post_{{ post.id }}_label">{% trans "Are you sure?" %}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                {% trans "Are you sure you want to delete this post? This procedure is irreversible!" %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary modal-close" data-dismiss="modal">{% trans "Close" %}</button>
+                <button type="button" class="btn btn-danger modal-delete">{% trans "Delete" %}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- removed CDN links -->
+  <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script> -->
+         <!-- <script src="{% static 'network/js/jquery.min.js' %}"></script> -->
+           <!-- <script src="{% static 'network/js/bootstrap.min.js' %}"></script> -->
+
+           <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+           <!-- Emojis CSS -->
+           <!-- <link href="https://emoji-css.afeld.me/emoji.css" rel="stylesheet"> -->
+
+           {% block script %}
+           <script src="{% static 'network/js/post-comment_functions.js' %}"></script>
+           <script src="{% static 'network/js/post_functions.js' %}"></script>
+           <script src="{% static 'network/js/comment_functions.js' %}"></script>
+           {% if user.is_authenticated %}
+               <script src="{% static 'network/js/authenticated.js' %}"></script>
+           {% else %}
+               <script src="{% static 'network/js/not_authenticated.js' %}"></script>
+           {% endif %}  
+       {% endblock %}
+       {% block script %}
+        <script src="{% static 'network/js/user_profile_functions.js' %}"></script>
+        <script src="{% static 'network/js/post-comment_functions.js' %}"></script>
+        <script src="{% static 'network/js/post_functions.js' %}"></script>
+        <script src="{% static 'network/js/comment_functions.js' %}"></script>
+    {% if user.is_authenticated %}
+        <script src="{% static 'network/js/authenticated.js' %}"></script>
+    {% else %}
+        <script src="{% static 'network/js/not_authenticated.js' %}"></script>
+    {% endif %}  
+{% endblock %}
