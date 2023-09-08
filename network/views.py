@@ -277,6 +277,7 @@ def edit_profile(request):
 @login_required(login_url="network:login")
 def like(request, action, action_id):
     """ View: Controls all actions regarding liking """
+    """https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from"""
 
     if request.method == "GET":
         # Check if like exists and send back info
